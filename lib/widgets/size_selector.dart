@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:pomodoro_timer/domain/pomodoro_size.dart';
 import 'package:pomodoro_timer/domain/status.dart';
 
-const kTextStyleNormal = TextStyle(fontWeight: FontWeight.w400);
+const kTextStyleNormal = TextStyle(fontWeight: FontWeight.w500);
 
 final kTextStyleSelected =
-    kTextStyleNormal.copyWith(fontWeight: FontWeight.w600);
+    kTextStyleNormal.copyWith(fontWeight: FontWeight.w600, color: Colors.white);
 
 class SizeSelector extends StatelessWidget {
   final List<PomodoroSize> sizes;
@@ -18,9 +18,12 @@ class SizeSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: _buildButtons(),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: _buildButtons(),
+        ),
       ),
     );
   }
@@ -30,20 +33,27 @@ class SizeSelector extends StatelessWidget {
   }
 
   _buildButton(PomodoroSize selected, PomodoroSize selector) {
+    var isRunning = Status.running == status;
+
+    var isSelected = selected == selector;
+
     return ButtonTheme(
-        height: 48,
-        minWidth: 48,
-        child: OutlineButton(
-          borderSide: selected == selector
-              ? BorderSide(
-                  color: Colors.blue, width: 2, style: BorderStyle.solid)
-              : null,
-          onPressed:
-              Status.running != status ? () => onSizeSelected(selector) : null,
-          child: Text(
-            selector.name,
-            style: kTextStyleNormal,
-          ),
-        ));
+        height: 52,
+        minWidth: 60,
+        child: isSelected
+            ? RaisedButton(
+                onPressed: isRunning ? null : () {},
+                child: Text(
+                  selector.name,
+                  style: kTextStyleSelected,
+                ),
+              )
+            : FlatButton(
+                onPressed: isRunning ? null : () => onSizeSelected(selector),
+                child: Text(
+                  selector.name,
+                  style: kTextStyleNormal,
+                ),
+              ));
   }
 }

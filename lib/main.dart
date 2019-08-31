@@ -6,7 +6,6 @@ import 'package:pomodoro_timer/domain/status.dart';
 import 'package:pomodoro_timer/widgets/control_panel.dart';
 import 'package:pomodoro_timer/widgets/pomodoro_timer.dart';
 import 'package:pomodoro_timer/widgets/size_selector.dart';
-import 'dart:math' as math;
 
 void main() => runApp(MyApp());
 
@@ -47,10 +46,9 @@ class _MyHomePageState extends State<MyHomePage> {
     player.loadAll(['bugle_tune.mp3', 'beep_short.mp3']);
 
     _pomodoroSizes = _getSizes().reversed.toList();
-    _pomodoroSizeSelected = _pomodoroSizes [(_pomodoroSizes.length / 2).floor()];
+    _pomodoroSizeSelected = _pomodoroSizes[(_pomodoroSizes.length / 2).floor()];
 
     initTimer(_pomodoroSizeSelected);
-
   }
 
   _getStatus() {
@@ -96,7 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: double.infinity,
       width: double.infinity,
